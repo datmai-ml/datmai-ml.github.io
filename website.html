@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dat Mai — Portfolio</title>
+<meta name="description" content="Dat Mai Computer science student at Georgia Tech. Machine learning, data pipelines, and applied software." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+  --bg: #0c1014;
+  --surface: #141a20;
+  --text: #e8edf2;
+  --text-dim: #b0b8c2;
+  --text-faint: #6a737e;
+  --accent: #6fb3b8;
+  --accent-soft: #6fb3b815;
+  --border: #1d242c;
+  --border-strong: #2a333d;
+
+  --display: 'Instrument Serif', 'Times New Roman', serif;
+  --body: 'Geist', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --max-width: 880px;
+  --section-gap: clamp(4rem, 10vw, 7rem);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Atmospheric background */
+body::after {
+  content: '';
+  position: fixed;
+  top: -20%;
+  right: -10%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle, rgba(111, 179, 184, 0.05) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(60px);
+}
+
+/* Grain */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.topbar .mark {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.topbar .status {
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero {
+  padding: clamp(3rem, 8vw, 6rem) 0 var(--section-gap);
+}
+
+.hero-label {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(3.5rem, 9vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+}
+
+.hero h1 .italic {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-intro {
+  font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+  color: var(--text-dim);
+  line-height: 1.6;
+  max-width: 620px;
+  font-weight: 400;
+}
+
+.hero-intro strong {
+  color: var(--text);
+  font-weight: 400;
+}
+
+section {
+  margin-bottom: var(--section-gap);
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-number {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  letter-spacing: 0.05em;
+}
+
+.section-title {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.now-content {
+  font-size: 1.05rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+.now-content p + p {
+  margin-top: 1rem;
+}
+
+.now-content strong {
+  color: var(--text);
+  font-weight: 400;
+}
+
+.projects {
+  display: flex;
+  flex-direction: column;
+}
+
+.project {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  gap: 2rem;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  transition: padding 0.3s ease;
+}
+
+.project:hover {
+  padding-left: 0.5rem;
+}
+
+.project:last-child {
+  border-bottom: none;
+}
+
+.project-number {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  letter-spacing: 0.05em;
+  padding-top: 0.6rem;
+}
+
+.project-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.project-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.project-title {
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 3vw, 1.875rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.project-date {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 0.3rem 0.6rem;
+  border-radius: 2px;
+  border: 1px solid var(--accent-soft);
+}
+
+.project-desc {
+  color: var(--text-dim);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.project-desc p + p {
+  margin-top: 0.75rem;
+}
+
+.project-desc strong {
+  color: var(--text);
+  font-weight: 400;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 1.25rem 2.5rem;
+  font-size: 0.95rem;
+}
+
+.skill-category {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding-top: 0.15rem;
+}
+
+.skill-list {
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.skill-list span {
+  color: var(--text);
+}
+
+.contact-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-intro {
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--text);
+  max-width: 580px;
+}
+
+.contact-intro .accent {
+  color: var(--accent);
+  font-style: normal;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+}
+
+.contact-link {
+  color: var(--text-dim);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contact-link:hover {
+  color: var(--accent);
+}
+
+.contact-link::after {
+  content: '↗';
+  font-size: 0.85rem;
+  opacity: 0.5;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.contact-link:hover::after {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
+footer {
+  padding: 3rem 0 2rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.fade-in.delay-1 { animation-delay: 0.1s; }
+.fade-in.delay-2 { animation-delay: 0.2s; }
+.fade-in.delay-3 { animation-delay: 0.3s; }
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .topbar {
+    padding: 1.5rem 0;
+  }
+
+  .topbar .status .label {
+    display: none;
+  }
+
+  .hero {
+    padding: 2rem 0 4rem;
+  }
+
+  .project {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 2rem 0;
+  }
+
+  .project-number {
+    padding-top: 0;
+  }
+
+  .project:hover {
+    padding-left: 0;
+  }
+
+  .project-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem 0;
+  }
+
+  .skills-grid > * + .skill-category {
+    margin-top: 1rem;
+  }
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ============================================================
+       TOP BAR
+       ============================================================ -->
+  <header class="topbar fade-in">
+    <div class="status">
+      <span class="status-dot"></span>
+      <span class="label">Available — Summer 2026</span>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero">
+    <div class="hero-label fade-in delay-1">Atlanta, GA · Georgia Tech</div>
+    <h1 class="fade-in delay-2">
+      Dat Mai<span class="italic"></span>
+    </h1>
+    <p class="hero-intro fade-in delay-3">
+      Computer science student at Georgia Tech, focused on <strong>machine learning</strong> and <strong>data systems</strong>. I've built generative audio models, trained classifiers on imbalanced medical data, shipped a custom desktop app for a small business, and written a bot that plays Pokémon games.
+    </p>
+  </section>
+
+  <!-- ============================================================
+       NOW
+       ============================================================ -->
+  <section id="now">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Now</h2>
+    </div>
+    <div class="now-content">
+      <p>
+        I'm a rising senior at <strong>Georgia Tech</strong>, studying computer science with a focus on machine learning and data systems. I graduate in <strong>December 2026</strong>.
+      </p>
+      <p>
+        From January 2025 through May 2026 I worked as an undergraduate researcher at the <strong>Robotic Musicianship Lab</strong>, contributing to a real-time generative audio system that lets a robot rap collaboratively with a human. I'm now looking for summer and post-graduation roles in applied AI, ML engineering, or backend systems work.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROJECTS
+       ============================================================ -->
+  <section id="work">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Selected Works</h2>
+    </div>
+
+    <div class="projects">
+
+      <!-- 001 -->
+      <article class="project">
+        <div class="project-number">001</div>
+        <div class="project-content">
+          <div class="project-header">
+            <h3 class="project-title">Generative Audio for Real-Time Rap</h3>
+            <span class="project-date">Jan 2025 — May 2026</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">generative ai</span>
+            <span class="tag">transformers</span>
+            <span class="tag">audio</span>
+            <span class="tag">data pipeline</span>
+          </div>
+          <div class="project-desc">
+            <p>
+              Research at the Georgia Tech Robotic Musicianship Lab on a system that generates rap vocals in real time, conditioned on lyrics, a backing beat, and a reference voice. The goal was synchronous human-robot rap interaction.
+            </p>
+            <p>
+              I built the preprocessing pipeline that turned <strong>roughly 90,000 raw rap songs</strong> into training-ready data. Each song flowed through the same sequence of steps:
+            </p>
+            <p>
+              <strong>Vocal isolation.</strong> The source dataset shipped with vocals already separated from the instrumental track for each song. That meant I could derive the instrumental directly by subtracting the vocal waveform from the full mix, avoiding the need to run a source-separation model across the entire dataset.
+            </p>
+            <p>
+              <strong>Chunking on word boundaries.</strong> Each song was split into roughly 10-second chunks for training. A naive approach would cut at fixed time intervals, but that risks slicing a word in half and producing garbage training samples. I ran Whisper over each vocal track to get word-level timestamps, then placed chunk boundaries on the nearest natural word break within a 2-second tolerance window. Chunks always end on a fully spoken word.
+            </p>
+            <p>
+              <strong>Encoding to codec tokens.</strong> Raw audio is too high-dimensional for a transformer to model directly. A 10-second clip is around 160,000 audio samples. I passed each vocal and accompaniment chunk through XCodec, a neural audio codec that compresses audio into a short sequence of discrete tokens (around 1,600 per 10 seconds) while staying fully decodable back to audio. Generating rap then becomes a sequence-prediction problem over these tokens. The lyrics were embedded with a sentence-transformer model so the rapper could be conditioned on them at training time.
+            </p>
+            <p>
+              The full pipeline ran on a single GPU. I added aggressive memory cleanup between songs and resumable checkpointing, so a multi-day run could recover from crashes without losing progress and avoid running out of memory across tens of thousands of files.
+            </p>
+            <p>
+              On the modeling side, I contributed to several major revisions, including the move from MSE to cross-entropy loss after recognizing that codec tokens are discrete classes, and adopting a sliding-window generation approach to reduce discontinuities between audio chunks.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 002 -->
+      <article class="project">
+        <div class="project-number">002</div>
+        <div class="project-content">
+          <div class="project-header">
+            <h3 class="project-title">DoReMi Music School</h3>
+            <span class="project-date">Summer 2025</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">python</span>
+            <span class="tag">sqlite</span>
+            <span class="tag">full-stack</span>
+            <span class="tag">consulting</span>
+          </div>
+          <div class="project-desc">
+            <p>
+              A custom desktop application I built for a local music school. The owner was running scheduling, billing, and parent communication out of spreadsheets. Monthly invoicing alone took <strong>three to four hours</strong> of manual work.
+            </p>
+            <p>
+              I started with stakeholder interviews to scope the actual workflow. The interviews surfaced details that shaped the design, including the requirement that families with multiple students receive a single combined invoice rather than one per student.
+            </p>
+            <p>
+              I designed a four-table relational schema in SQLite (families, students, invoices, invoice items), built the desktop application with a Tkinter interface, and integrated PDF generation, Google Drive document storage, and SMS notifications via the Textbelt API.
+            </p>
+            <p>
+              Monthly invoicing went from <strong>3 to 4 hours down to about 10 minutes</strong>. The time savings went into taking on more students.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 003 -->
+      <article class="project">
+        <div class="project-number">003</div>
+        <div class="project-content">
+          <div class="project-header">
+            <h3 class="project-title">Diabetic Retinopathy Classifier</h3>
+            <span class="project-date">Fall 2025</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">computer vision</span>
+            <span class="tag">transfer learning</span>
+            <span class="tag">medical imaging</span>
+          </div>
+          <div class="project-desc">
+            <p>
+              A 5-class severity classifier for diabetic retinopathy, trained on the heavily imbalanced APTOS 2019 retinal-image dataset.
+            </p>
+            <p>
+              The model uses <strong>transfer learning on ResNet50</strong> with strategic layer freezing and aggressive augmentation to limit overfitting on a small medical dataset. Training infrastructure was built in PyTorch Lightning with class-weighted cross-entropy loss to handle the imbalance, ReduceLR scheduling, and custom kappa tracking per epoch.
+            </p>
+            <p>
+              Achieved a quadratic-weighted <strong>kappa above 0.88</strong>, which is competitive on this benchmark.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 004 -->
+      <article class="project">
+        <div class="project-number">004</div>
+        <div class="project-content">
+          <div class="project-header">
+            <h3 class="project-title">ShinyHunterBot</h3>
+            <span class="project-date">Early 2026</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">computer vision</span>
+            <span class="tag">cnn</span>
+            <span class="tag">automation</span>
+            <span class="tag">pokémon</span>
+          </div>
+          <div class="project-desc">
+            <p>
+              An end-to-end system that automates shiny hunting in <strong>Generation 5 Pokémon games</strong> (Black, White, Black 2, White 2) running in the DeSmuME emulator. Shinies are rare color variants that appear at a base rate of about 1 in 8,000 encounters.
+            </p>
+            <p>
+              The bot drives the emulator with simulated keypresses to walk in tall grass and trigger random encounters. Encounter detection runs on a frame-brightness check for the white-fade transition that precedes every battle, confirmed across four consecutive frames to filter out single-frame noise.
+            </p>
+            <p>
+              The core ML problem is <strong>sparkle detection</strong>. When a shiny appears in Gen 5, a star-shaped sparkle animation plays over the sprite for a few frames at the start of the encounter. Normal encounters never produce this animation. The sparkle is only visible in a subset of the 60-frame intro, so per-frame classification is noisy. I built a custom CNN that runs over each frame and aggregates predictions across the full 60-frame sequence with a max operation, which corresponds to asking whether any frame in the encounter contained a sparkle.
+            </p>
+            <p>
+              The data collection layer labels its own training data. The bot toggles between forced-shiny mode using a Gen 5 cheat code and normal mode, producing clean labeled batches from both classes with no manual intervention.
+            </p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TOOLS
+       ============================================================ -->
+  <section id="tech">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Tools</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-category">Languages</div>
+      <div class="skill-list">
+        <span>Python</span>, <span>Java</span>, <span>C</span>, <span>SQL</span>, <span>JavaScript</span> / <span>TypeScript</span>
+      </div>
+      <div class="skill-category">ML</div>
+      <div class="skill-list">
+        <span>PyTorch</span>, <span>PyTorch Lightning</span>, <span>HuggingFace</span>, <span>scikit-learn</span>, <span>OpenCV</span>, <span>NumPy</span>, <span>pandas</span>
+      </div>
+      <div class="skill-category">Backend &amp; Infra</div>
+      <div class="skill-list">
+        <span>FastAPI</span>, <span>React</span>, <span>SQLite</span>, <span>Docker</span>, <span>Git</span>, <span>Jupyter</span>
+      </div>
+      <div class="skill-category">Practices</div>
+      <div class="skill-list">
+        Agile / Scrum, code review, technical writing, stakeholder interviews
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+       ============================================================ -->
+  <section id="contact">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Get in touch</h2>
+    </div>
+    <div class="contact-block">
+      <p class="contact-intro">
+        Open to summer 2026 internships and post-graduation roles in <span class="accent">applied AI, ML engineering, or backend systems</span>.
+      </p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:maitiendat7701@gmail.com">email</a>
+        <a class="contact-link" href="https://github.com/datmai-ml" target="_blank" rel="noopener">github</a>
+        <a class="contact-link" href="https://linkedin.com/in/dat-t-mai/" target="_blank" rel="noopener">linkedin</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Dat Mai</span>
+  </footer>
+
+</div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('section').forEach((el) => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
