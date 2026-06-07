@@ -207,6 +207,63 @@ section {
   font-weight: 400;
 }
 
+/* Resume */
+.resume-block {
+  display: flex;
+}
+ 
+.resume-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.25rem 1.5rem;
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--text);
+  font-family: var(--body);
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  min-width: 280px;
+}
+ 
+.resume-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-1px);
+}
+ 
+.resume-link-label {
+  font-size: 1rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+ 
+.resume-link-label::before {
+  content: '↗';
+  color: var(--accent);
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+ 
+.resume-link:hover .resume-link-label::before {
+  transform: translate(2px, -2px);
+}
+ 
+.resume-link-meta {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+}
+
 .projects {
   display: flex;
   flex-direction: column;
@@ -456,6 +513,11 @@ footer {
   .skills-grid > * + .skill-category {
     margin-top: 1rem;
   }
+
+  .resume-link {
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 ::selection {
@@ -509,12 +571,28 @@ footer {
     </div>
   </section>
 
+    <!-- ============================================================
+       RESUME
+       ============================================================ -->
+  <section id="resume">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Resume</h2>
+    </div>
+    <div class="resume-block">
+      <a class="resume-link" href="files/dat-mai-resume.pdf" target="_blank" rel="noopener">
+        <span class="resume-link-label">View resume</span>
+        <span class="resume-link-meta">PDF</span>
+      </a>
+    </div>
+  </section>
+
   <!-- ============================================================
        PROJECTS
        ============================================================ -->
   <section id="work">
     <div class="section-header">
-      <span class="section-number">02</span>
+      <span class="section-number">03</span>
       <h2 class="section-title">Selected Works</h2>
     </div>
 
@@ -657,7 +735,7 @@ footer {
        ============================================================ -->
   <section id="tech">
     <div class="section-header">
-      <span class="section-number">03</span>
+      <span class="section-number">04</span>
       <h2 class="section-title">Tools</h2>
     </div>
     <div class="skills-grid">
@@ -685,7 +763,7 @@ footer {
        ============================================================ -->
   <section id="contact">
     <div class="section-header">
-      <span class="section-number">04</span>
+      <span class="section-number">05</span>
       <h2 class="section-title">Get in touch</h2>
     </div>
     <div class="contact-block">
