@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dat Mai — Portfolio</title>
-<meta name="description" content="Dat Mai Computer science student at Georgia Tech. Machine learning, data pipelines, and applied software." />
+<meta name="description" content="Dat Mai. Computer science student at Georgia Tech. Machine learning, data pipelines, and applied software." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -211,7 +211,7 @@ section {
 .resume-block {
   display: flex;
 }
- 
+
 .resume-link {
   display: inline-flex;
   align-items: center;
@@ -227,13 +227,13 @@ section {
   transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
   min-width: 280px;
 }
- 
+
 .resume-link:hover {
   border-color: var(--accent);
   background: var(--accent-soft);
   transform: translateY(-1px);
 }
- 
+
 .resume-link-label {
   font-size: 1rem;
   font-weight: 500;
@@ -241,18 +241,18 @@ section {
   align-items: center;
   gap: 0.6rem;
 }
- 
+
 .resume-link-label::before {
   content: '↗';
   color: var(--accent);
   font-size: 0.9rem;
   transition: transform 0.2s ease;
 }
- 
+
 .resume-link:hover .resume-link-label::before {
   transform: translate(2px, -2px);
 }
- 
+
 .resume-link-meta {
   font-family: var(--mono);
   font-size: 0.7rem;
@@ -357,6 +357,101 @@ section {
 .project-desc strong {
   color: var(--text);
   font-weight: 400;
+}
+
+/* Project images */
+.project-image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 1.25rem 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--surface);
+  cursor: zoom-in;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.project-image:hover {
+  border-color: var(--accent);
+}
+
+.project-images {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.project-images .project-image {
+  margin: 0;
+}
+
+.project-image-caption {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  letter-spacing: 0.03em;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+/* Lightbox overlay */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 20, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: zoom-out;
+  padding: 2rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.lightbox.active {
+  display: flex;
+  opacity: 1;
+}
+
+.lightbox img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.lightbox-close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .skills-grid {
@@ -534,6 +629,7 @@ footer {
        TOP BAR
        ============================================================ -->
   <header class="topbar fade-in">
+    <a href="#" class="mark">dat mai</a>
     <div class="status">
       <span class="status-dot"></span>
       <span class="label">Available — Summer 2026</span>
@@ -546,7 +642,7 @@ footer {
   <section class="hero">
     <div class="hero-label fade-in delay-1">Atlanta, GA · Georgia Tech</div>
     <h1 class="fade-in delay-2">
-      Dat Mai<span class="italic"></span>
+      Dat Mai<span class="italic">.</span>
     </h1>
     <p class="hero-intro fade-in delay-3">
       Computer science student at Georgia Tech, focused on <strong>machine learning</strong> and <strong>data systems</strong>. I've built generative audio models, trained classifiers on imbalanced medical data, shipped a custom desktop app for a small business, and written a bot that plays Pokémon games.
@@ -571,7 +667,7 @@ footer {
     </div>
   </section>
 
-    <!-- ============================================================
+  <!-- ============================================================
        RESUME
        ============================================================ -->
   <section id="resume">
@@ -580,7 +676,7 @@ footer {
       <h2 class="section-title">Resume</h2>
     </div>
     <div class="resume-block">
-      <a class="resume-link" href="media/Resume.pdf" target="_blank" rel="noopener">
+      <a class="resume-link" href="files/dat-mai-resume.pdf" target="_blank" rel="noopener">
         <span class="resume-link-label">View resume</span>
         <span class="resume-link-meta">PDF</span>
       </a>
@@ -665,6 +761,14 @@ footer {
             <p>
               Monthly invoicing went from <strong>3 to 4 hours down to about 10 minutes</strong>. The time savings went into taking on more students.
             </p>
+            <p>
+              An in-progress UI refresh, rebuilt in React, against the same schema and invoicing logic:
+            </p>
+            <div class="project-images">
+              <img class="project-image" src="media/doremi/dashboard.png" alt="DoReMi dashboard view showing invoice and revenue stats" loading="lazy" />
+              <img class="project-image" src="media/doremi/students.png" alt="DoReMi students tab with family grouping" loading="lazy" />
+              <img class="project-image" src="media/doremi/invoices.png" alt="DoReMi invoices tab with line items" loading="lazy" />
+            </div>
           </div>
         </div>
       </article>
@@ -780,11 +884,49 @@ footer {
 
   <footer>
     <span>© 2026 Dat Mai</span>
+    <span>Built &amp; designed in Atlanta</span>
   </footer>
+  <!-- Lightbox modal -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Image preview">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close image">×</button>
+    <img id="lightboxImage" src="" alt="" />
+  </div>
 
 </div>
 
 <script>
+// Lightbox
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxClose = document.getElementById('lightboxClose');
+
+document.querySelectorAll('.project-image').forEach((img) => {
+  img.addEventListener('click', () => {
+    lightboxImage.src = img.src;
+    lightboxImage.alt = img.alt;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+
+lightboxClose.addEventListener('click', closeLightbox);
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+    closeLightbox();
+  }
+});
+
+// Fade-in on scroll
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
