@@ -388,15 +388,40 @@ section {
   margin: 0;
 }
 
+/* Image row with captions (for comparison sets like DR severity classes) */
+.project-images-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  margin: 1.25rem 0;
+}
+
+.project-image-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.project-image-figure .project-image {
+  margin: 0;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
 .project-image-caption {
   display: block;
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--text-faint);
   letter-spacing: 0.03em;
-  margin-top: -0.5rem;
-  margin-bottom: 0.5rem;
-  text-align: left;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .project-images-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 /* Lightbox overlay */
@@ -629,7 +654,7 @@ footer {
        TOP BAR
        ============================================================ -->
   <header class="topbar fade-in">
-    <a href="#" class="mark">dat mai</a>
+    <div></div>
     <div class="status">
       <span class="status-dot"></span>
       <span class="label">Available — Summer 2026</span>
@@ -642,7 +667,7 @@ footer {
   <section class="hero">
     <div class="hero-label fade-in delay-1">Atlanta, GA · Georgia Tech</div>
     <h1 class="fade-in delay-2">
-      Dat Mai<span class="italic">.</span>
+      Dat Mai
     </h1>
     <p class="hero-intro fade-in delay-3">
       Computer science student at Georgia Tech, focused on <strong>machine learning</strong> and <strong>data systems</strong>. I've built generative audio models, trained classifiers on imbalanced medical data, shipped a custom desktop app for a small business, and written a bot that plays Pokémon games.
@@ -713,22 +738,16 @@ footer {
               Research at the Georgia Tech Robotic Musicianship Lab on a system that generates rap vocals in real time, conditioned on lyrics, a backing beat, and a reference voice. The goal was synchronous human-robot rap interaction.
             </p>
             <p>
-              I built the preprocessing pipeline that turned <strong>roughly 90,000 raw rap songs</strong> into training-ready data. Each song flowed through the same sequence of steps:
+              I built the preprocessing pipeline that turned <strong>roughly 90,000 raw rap songs</strong> into training-ready data, running on a single GPU with resumable checkpointing to survive multi-day runs.
             </p>
             <p>
-              <strong>Vocal isolation.</strong> The source dataset shipped with vocals already separated from the instrumental track for each song. That meant I could derive the instrumental directly by subtracting the vocal waveform from the full mix, avoiding the need to run a source-separation model across the entire dataset.
+              <strong>Chunking on word boundaries.</strong> Each song was split into roughly 10-second chunks for training. A naive approach would cut at fixed time intervals and risk slicing a word in half. I ran Whisper over each vocal track to get word-level timestamps, then placed chunk boundaries on the nearest natural word break within a 2-second tolerance window.
             </p>
             <p>
-              <strong>Chunking on word boundaries.</strong> Each song was split into roughly 10-second chunks for training. A naive approach would cut at fixed time intervals, but that risks slicing a word in half and producing garbage training samples. I ran Whisper over each vocal track to get word-level timestamps, then placed chunk boundaries on the nearest natural word break within a 2-second tolerance window. Chunks always end on a fully spoken word.
+              <strong>Encoding to codec tokens.</strong> Raw audio is too high-dimensional for a transformer to model directly (around 160,000 samples for a 10-second clip). Each chunk was passed through XCodec, a neural audio codec that compresses audio into a short sequence of discrete tokens while staying fully decodable, turning rap generation into a sequence-prediction problem.
             </p>
             <p>
-              <strong>Encoding to codec tokens.</strong> Raw audio is too high-dimensional for a transformer to model directly. A 10-second clip is around 160,000 audio samples. I passed each vocal and accompaniment chunk through XCodec, a neural audio codec that compresses audio into a short sequence of discrete tokens (around 1,600 per 10 seconds) while staying fully decodable back to audio. Generating rap then becomes a sequence-prediction problem over these tokens. The lyrics were embedded with a sentence-transformer model so the rapper could be conditioned on them at training time.
-            </p>
-            <p>
-              The full pipeline ran on a single GPU. I added aggressive memory cleanup between songs and resumable checkpointing, so a multi-day run could recover from crashes without losing progress and avoid running out of memory across tens of thousands of files.
-            </p>
-            <p>
-              On the modeling side, I contributed to several major revisions, including the move from MSE to cross-entropy loss after recognizing that codec tokens are discrete classes, and adopting a sliding-window generation approach to reduce discontinuities between audio chunks.
+              On the modeling side, I contributed to several major revisions, including moving from MSE to cross-entropy loss after recognizing that codec tokens are discrete classes, and adopting a sliding-window generation approach to reduce discontinuities between audio chunks.
             </p>
           </div>
         </div>
@@ -790,6 +809,31 @@ footer {
             <p>
               A 5-class severity classifier for diabetic retinopathy, trained on the heavily imbalanced APTOS 2019 retinal-image dataset.
             </p>
+            <p>
+              The five severity classes the model distinguishes between:
+            </p>
+            <div class="project-images-row">
+              <figure class="project-image-figure">
+                <img class="project-image" src="media/dr/class-0.png" alt="Fundus image showing no diabetic retinopathy" loading="lazy" />
+                <figcaption class="project-image-caption">0 · No DR</figcaption>
+              </figure>
+              <figure class="project-image-figure">
+                <img class="project-image" src="media/dr/class-1.png" alt="Fundus image showing mild diabetic retinopathy" loading="lazy" />
+                <figcaption class="project-image-caption">1 · Mild</figcaption>
+              </figure>
+              <figure class="project-image-figure">
+                <img class="project-image" src="media/dr/class-2.png" alt="Fundus image showing moderate diabetic retinopathy" loading="lazy" />
+                <figcaption class="project-image-caption">2 · Moderate</figcaption>
+              </figure>
+              <figure class="project-image-figure">
+                <img class="project-image" src="media/dr/class-3.png" alt="Fundus image showing severe diabetic retinopathy" loading="lazy" />
+                <figcaption class="project-image-caption">3 · Severe</figcaption>
+              </figure>
+              <figure class="project-image-figure">
+                <img class="project-image" src="media/dr/class-4.png" alt="Fundus image showing proliferative diabetic retinopathy" loading="lazy" />
+                <figcaption class="project-image-caption">4 · Proliferative</figcaption>
+              </figure>
+            </div>
             <p>
               The model uses <strong>transfer learning on ResNet50</strong> with strategic layer freezing and aggressive augmentation to limit overfitting on a small medical dataset. Training infrastructure was built in PyTorch Lightning with class-weighted cross-entropy loss to handle the imbalance, ReduceLR scheduling, and custom kappa tracking per epoch.
             </p>
